@@ -1,0 +1,675 @@
+:root {
+    --accent: #DA9CFF;
+    --bg: #0b0c0d;
+    --card: #151618;
+    --border: #1a1c1e;
+    --h-input: 45px;
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Crucial para que midan lo mismo */
+
+body,
+html {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    background: #000;
+    color: #fff;
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    touch-action: manipulation;
+}
+
+.app-container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 340px;
+    min-width: 340px;
+    background: var(--card);
+    padding: 25px 20px;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
+    max-height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* Scrollbar personalizado para sidebar */
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.sidebar-logo {
+    width: 35px;
+    height: 35px;
+    object-fit: contain;
+}
+
+.brand-text {
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+}
+
+.field {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+label {
+    display: block;
+    font-size: 10px;
+    color: #666;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+/* IGUALAR TAMAÑOS */
+input,
+select {
+    width: 100%;
+    height: var(--h-input);
+    background: #000;
+    border: 1px solid var(--border);
+    color: #fff;
+    padding: 0 15px;
+    border-radius: 10px;
+    outline: none;
+    font-size: 14px;
+    display: block;
+    appearance: none;
+}
+
+input:focus,
+select:focus {
+    border-color: var(--accent);
+}
+
+/* PANEL DE INVENTARIO */
+.inventory-panel {
+    flex-grow: 1;
+    background: #000;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-top: 10px;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    min-height: 150px;
+}
+
+.inventory-panel.active {
+    display: flex;
+}
+
+.inventory-header {
+    background: #1a1c1e;
+    padding: 12px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.title-group small {
+    font-size: 10px;
+    color: #666;
+}
+
+#inventory-title {
+    font-weight: bold;
+    font-size: 14px;
+    color: var(--accent);
+}
+
+.close-btn {
+    background: transparent;
+    border: none;
+    color: #666;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
+}
+
+.close-btn:hover {
+    color: var(--accent);
+}
+
+.item-card {
+    background: #0b0c0d;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    border: 1px solid #1a1c1e;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.item-name {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.3;
+    word-break: break-word;
+}
+
+.item-code {
+    font-size: 10px;
+    color: var(--accent);
+    font-family: monospace;
+    line-height: 1.2;
+}
+
+/* LISTA DE CONTENIDO CON SCROLL */
+.list-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Scrollbar personalizado */
+.list-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.list-content::-webkit-scrollbar-track {
+    background: #0b0c0d;
+    border-radius: 3px;
+}
+
+.list-content::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 3px;
+}
+
+.list-content::-webkit-scrollbar-thumb:hover {
+    background: #ff6dff;
+}
+
+/* AREA DEL MAPA */
+.map-area {
+    flex-grow: 1;
+    position: relative;
+    background: #070707;
+    overflow: hidden;
+}
+
+#canvas-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+#marker-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 50;
+}
+
+.dot-marker {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background: #ff3b3b;
+    border: 2.5px solid #fff;
+    border-radius: 50%;
+    pointer-events: auto;
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 15px rgba(255, 59, 59, 0.5);
+    z-index: 60;
+}
+
+.dot-marker.active {
+    background: #fff;
+    border-color: var(--accent);
+    box-shadow: 0 0 20px var(--accent);
+    transform: translate(-50%, -50%) scale(1.3);
+}
+
+.zoom-controls {
+    position: absolute;
+    bottom: 25px;
+    right: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 1000;
+}
+
+.zoom-controls button {
+    width: 50px;
+    height: 50px;
+    background: rgba(21, 22, 24, 0.95);
+    border: 1px solid var(--border);
+    color: #fff;
+    font-size: 22px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: bold;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: none;
+}
+
+.zoom-controls button:active {
+    background: var(--accent);
+    color: #000;
+    transform: scale(0.95);
+}
+
+.zoom-controls button:hover {
+    border-color: var(--accent);
+    background: rgba(218, 156, 255, 0.1);
+}
+
+.zoom-display {
+    width: 50px;
+    height: 28px;
+    background: rgba(21, 22, 24, 0.95);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 4px;
+    font-variant-numeric: tabular-nums;
+}
+
+/* --- MÓVIL PEQUEÑO (< 480px) --- */
+@media (max-width: 479px) {
+    :root {
+        --h-input: 38px;
+    }
+
+    .app-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        min-width: 100%;
+        height: auto;
+        padding: 10px;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        max-height: 30vh;
+        overflow-y: auto;
+    }
+
+    .brand {
+        margin-bottom: 10px;
+        justify-content: center;
+    }
+
+    .brand-text {
+        font-size: 0.9rem;
+        letter-spacing: 0.5px;
+    }
+
+    .sidebar-logo {
+        width: 30px;
+        height: 30px;
+    }
+
+    .field {
+        margin-bottom: 6px;
+    }
+
+    label {
+        font-size: 8px;
+        margin-bottom: 4px;
+    }
+
+    input,
+    select {
+        height: var(--h-input);
+        font-size: 12px;
+        padding: 0 10px;
+    }
+
+    .map-area {
+        height: 65vh;
+        width: 100%;
+        order: 2;
+    }
+
+    .inventory-panel {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 55vh;
+        z-index: 2000;
+        margin: 0;
+        border-radius: 20px 20px 0 0;
+        box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.8);
+        width: 100%;
+    }
+
+    .inventory-header {
+        padding: 10px;
+        gap: 5px;
+    }
+
+    .item-card {
+        padding: 8px;
+        margin-bottom: 4px;
+        font-size: 10px;
+    }
+
+    .item-name {
+        font-size: 10px;
+    }
+
+    .item-code {
+        font-size: 8px;
+    }
+
+    .zoom-controls {
+        bottom: 8px;
+        right: 8px;
+        flex-direction: row;
+        gap: 5px;
+    }
+
+    .zoom-controls button {
+        width: 42px;
+        height: 42px;
+        font-size: 18px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+/* --- MÓVIL MEDIANO (480px - 768px) --- */
+@media (min-width: 480px) and (max-width: 768px) {
+    :root {
+        --h-input: 42px;
+    }
+
+    .app-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        min-width: 100%;
+        height: auto;
+        padding: 12px;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        max-height: 32vh;
+        overflow-y: auto;
+    }
+
+    .brand {
+        margin-bottom: 12px;
+        justify-content: center;
+    }
+
+    .brand-text {
+        font-size: 0.95rem;
+    }
+
+    .sidebar-logo {
+        width: 32px;
+        height: 32px;
+    }
+
+    .field {
+        margin-bottom: 8px;
+    }
+
+    label {
+        font-size: 9px;
+        margin-bottom: 5px;
+    }
+
+    input,
+    select {
+        height: var(--h-input);
+        font-size: 13px;
+        padding: 0 12px;
+    }
+
+    .map-area {
+        height: 62vh;
+        width: 100%;
+        order: 2;
+    }
+
+    .inventory-panel {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 52vh;
+        z-index: 2000;
+        margin: 0;
+        border-radius: 20px 20px 0 0;
+        box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.8);
+        width: 100%;
+    }
+
+    .inventory-header {
+        padding: 11px 12px;
+    }
+
+    .item-card {
+        padding: 10px;
+        margin-bottom: 6px;
+        font-size: 11px;
+    }
+
+    .item-name {
+        font-size: 11px;
+    }
+
+    .item-code {
+        font-size: 9px;
+    }
+
+    .zoom-controls {
+        bottom: 10px;
+        right: 10px;
+        flex-direction: row;
+        gap: 6px;
+    }
+
+    .zoom-controls button {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+}
+
+/* --- TABLET (769px - 1024px) --- */
+@media (min-width: 769px) and (max-width: 1024px) {
+    :root {
+        --h-input: 43px;
+    }
+
+    .sidebar {
+        width: 310px;
+        min-width: 310px;
+        padding: 20px 15px;
+    }
+
+    .brand {
+        margin-bottom: 20px;
+    }
+
+    .brand-text {
+        font-size: 1rem;
+    }
+
+    .sidebar-logo {
+        width: 33px;
+        height: 33px;
+    }
+
+    label {
+        font-size: 9px;
+        margin-bottom: 6px;
+    }
+
+    input,
+    select {
+        height: var(--h-input);
+        font-size: 13px;
+        padding: 0 12px;
+    }
+
+    .field {
+        margin-bottom: 12px;
+    }
+
+    .item-card {
+        padding: 11px;
+        margin-bottom: 7px;
+        font-size: 11px;
+    }
+
+    .item-name {
+        font-size: 11px;
+    }
+
+    .item-code {
+        font-size: 9px;
+    }
+
+    .zoom-controls button {
+        width: 42px;
+        height: 42px;
+        font-size: 18px;
+    }
+}
+
+/* --- DESKTOP (1025px+) --- */
+@media (min-width: 1025px) {
+    :root {
+        --h-input: 45px;
+    }
+
+    .sidebar {
+        width: 340px;
+        min-width: 340px;
+        padding: 25px 20px;
+    }
+
+    .brand {
+        margin-bottom: 30px;
+    }
+
+    .brand-text {
+        font-size: 1.1rem;
+    }
+
+    .sidebar-logo {
+        width: 35px;
+        height: 35px;
+    }
+
+    .field {
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-size: 10px;
+        margin-bottom: 8px;
+    }
+
+    input,
+    select {
+        height: var(--h-input);
+        font-size: 14px;
+        padding: 0 15px;
+    }
+
+    .item-card {
+        padding: 12px;
+        margin-bottom: 8px;
+        font-size: 12px;
+    }
+
+    .item-name {
+        font-size: 12px;
+    }
+
+    .item-code {
+        font-size: 10px;
+    }
+
+    .zoom-controls button {
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+    }
+}

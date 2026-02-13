@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="YSD Storage">
+    <title>Agustina Falcon</title>
+    <script src="https://unpkg.com/konva@9/konva.min.js"></script>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="website icon" href="/static/ysd.png" type="AgustinaFalcon">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="brand">
+                <img src="/static/ysd.png" alt="Logo" class="sidebar-logo">
+                <div class="brand-text">Agustina Falcon</div>
+            </div>
+            
+            <div class="field">
+                <label>Bodega Seleccionada</label>
+                <div class="custom-select">
+                    <select id="selector-bodega"></select>
+                </div>
+            </div>
+            
+            <div class="field">
+                <label>Buscador Inteligente</label>
+                <input type="text" id="input-busqueda" list="lista-items" placeholder="Item o #Código...">
+                <datalist id="lista-items"></datalist>
+            </div>
+
+            <div class="inventory-panel" id="panel-inventario">
+                <div class="inventory-header">
+                    <div class="title-group">
+                        <small>CONTENIDO DEL</small>
+                        <span id="inventory-title">ESTANTE</span>
+                    </div>
+                    <button onclick="cerrarInventario()" class="close-btn">&times;</button>
+                </div>
+                <div id="lista-suplementos" class="list-content"></div>
+            </div>
+        </aside>
+
+        <main class="map-area">
+            <div class="zoom-controls">
+                <button onclick="zoomMap(1.2)" title="Zoom in" aria-label="Acercar">+</button>
+                <button onclick="zoomMap(0.8)" title="Zoom out" aria-label="Alejar">-</button>
+                <button onclick="resetZoom()" title="Reset zoom" aria-label="Restablecer">⟲</button>
+                <div class="zoom-display" id="zoom-display">100%</div>
+            </div>
+            <div id="canvas-container"></div>
+            <div id="marker-layer"></div>
+        </main>
+    </div>
+    <script src="/static/script.js"></script>
+</body>
+</html>
