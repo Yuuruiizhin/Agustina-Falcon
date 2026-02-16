@@ -25,6 +25,10 @@ async function init() {
 
 async function cargarBodega(nombre) {
     if(stage) stage.destroy();
+    // Reset globals para forzar recreación de la imagen y limpiar marcadores
+    currentImg = null;
+    puntosData = [];
+    scale = 1;
     document.getElementById('marker-layer').innerHTML = '';
     const container = document.getElementById('canvas-container');
     
